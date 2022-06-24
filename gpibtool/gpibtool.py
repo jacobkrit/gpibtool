@@ -323,7 +323,10 @@ def _list_addresses(
     # https://github.com/pyvisa/pyvisa-py/issues/282
     with _supress_stderr():
         resources = get_resources(verbose=verbose)
-    ic(resources)
+    if verbose:
+        ic(resources)
+    for resource in resources:
+        output(resource, reason=None, tty=tty, dict_input=dict_input, verbose=verbose)
 
 
 @cli.command("idns")
