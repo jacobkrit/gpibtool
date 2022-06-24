@@ -16,7 +16,7 @@ dependencies = [
     "PyVISA-py",
     "sh",
     "asserttool @ git+https://git@github.com/jakeogh/asserttool",
-    "bnfttool @ git+https://git@github.com/jakeogh/bnfttool",
+    "bnftool @ git+https://git@github.com/jakeogh/bnftool",
 ]
 
 config = {
