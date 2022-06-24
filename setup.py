@@ -10,7 +10,13 @@ import fastentrypoints
 if not sys.version_info[0] == 3:
     sys.exit("Python 3 is required. Use: 'python3 setup.py install'")
 
-dependencies = ["icecream", "click", "PyVISA-py", "sh"]
+dependencies = [
+    "icecream",
+    "click",
+    "PyVISA-py",
+    "sh",
+    "asserttool @ git+https://git@github.com/jakeogh/asserttool",
+]
 
 config = {
     "version": "0.1",
