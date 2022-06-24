@@ -341,7 +341,9 @@ def _list_idns(
     ipython: bool,
 ):
 
-    # dict_input = True  # this does not take input on stdin, todo: fix dict_input convention to reflect this
+    # forcing dict_input=True since a IDN alone is _never_ as useful as a (GPIB source: IDN) mapping
+    # TODO-maybe: if the GPIB source was read on stdin, this wouldnt be be necessary
+    dict_input = True  # this does not take input on stdin, todo: fix dict_input convention to reflect this
     tty, verbose = tv(
         ctx=ctx,
         verbose=verbose,
