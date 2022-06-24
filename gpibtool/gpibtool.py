@@ -341,18 +341,20 @@ def _list_idns(
     ipython: bool,
 ):
 
-    dict_input = True  # this does not take input on stdin, todo: fix dict_input convention to reflect this
+    # dict_input = True  # this does not take input on stdin, todo: fix dict_input convention to reflect this
     tty, verbose = tv(
         ctx=ctx,
         verbose=verbose,
         verbose_inf=verbose_inf,
     )
 
-    ic('calling: pyvisa.ResourceManager("@py")')
+    if verbose:
+        ic('calling: pyvisa.ResourceManager("@py")')
     with _supress_stderr():
         rm = pyvisa.ResourceManager("@py")
 
-    ic("calling: get_resources()")
+    if verbose:
+        ic("calling: get_resources()")
     resources = get_resources(verbose=verbose)
     for resource in resources:
         if verbose:
