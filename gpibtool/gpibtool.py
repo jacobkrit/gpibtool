@@ -125,8 +125,6 @@ def get_resources(
     verbose: Union[bool, int, float],
 ):
 
-    # with redirect_stderr(None):
-    #    with redirect_stdout(None):
     with _supress_stderr():
         resource_manager = pyvisa.ResourceManager()
         resources = list(resource_manager.list_resources())
@@ -342,7 +340,7 @@ def _list_idns(
 ):
 
     # forcing dict_input=True since a IDN alone is _never_ as useful as a (GPIB source: IDN) mapping
-    # TODO-maybe: if the GPIB source was read on stdin, this wouldnt be be necessary
+    # toodoo-maybe: if the GPIB source was read on stdin, this wouldnt be be necessary
     dict_input = True  # this does not take input on stdin, todo: fix dict_input convention to reflect this
     tty, verbose = tv(
         ctx=ctx,
