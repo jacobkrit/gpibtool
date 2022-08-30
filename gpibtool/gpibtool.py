@@ -45,28 +45,29 @@ from clicktool import click_global_options
 from clicktool import tv
 from mptool import output
 from pyvisa.errors import VisaIOError
+from stdiotool import supress_stderr
 
 signal(SIGPIPE, SIG_DFL)
 
 
-# https://github.com/pyvisa/pyvisa-py/issues/282
-@contextmanager
-def _supress_stderr():
-    original_stderr = os.dup(
-        2
-    )  # stderr stream is linked to file descriptor 2, save a copy of the real stderr so later we can restore it
-    blackhole = os.open(
-        os.devnull, os.O_WRONLY
-    )  # anything written to /dev/null will be discarded
-    os.dup2(
-        blackhole, 2
-    )  # duplicate the blackhole to file descriptor 2, which the C library uses as stderr
-    os.close(
-        blackhole
-    )  # blackhole was duplicated from the line above, so we don't need this anymore
-    yield
-    os.dup2(original_stderr, 2)  # restoring the original stderr
-    os.close(original_stderr)
+## https://github.com/pyvisa/pyvisa-py/issues/282
+# @contextmanager
+# def _supress_stderr():
+#    original_stderr = os.dup(
+#        2
+#    )  # stderr stream is linked to file descriptor 2, save a copy of the real stderr so later we can restore it
+#    blackhole = os.open(
+#        os.devnull, os.O_WRONLY
+#    )  # anything written to /dev/null will be discarded
+#    os.dup2(
+#        blackhole, 2
+#    )  # duplicate the blackhole to file descriptor 2, which the C library uses as stderr
+#    os.close(
+#        blackhole
+#    )  # blackhole was duplicated from the line above, so we don't need this anymore
+#    yield
+#    os.dup2(original_stderr, 2)  # restoring the original stderr
+#    os.close(original_stderr)
 
 
 class NoResourcesFoundError(ValueError):
@@ -125,7 +126,7 @@ def get_resources(
     verbose: bool | int | float,
 ):
 
-    with _supress_stderr():
+    with supress_stderr():
         resource_manager = pyvisa.ResourceManager()
         resources = list(resource_manager.list_resources())
 
@@ -319,7 +320,7 @@ def _list_addresses(
     )
 
     # https://github.com/pyvisa/pyvisa-py/issues/282
-    with _supress_stderr():
+    with supress_stderr():
         resources = get_resources(verbose=verbose)
     if verbose:
         ic(resources)
@@ -350,7 +351,7 @@ def _list_idns(
 
     if verbose:
         ic('calling: pyvisa.ResourceManager("@py")')
-    with _supress_stderr():
+    with supress_stderr():
         rm = pyvisa.ResourceManager("@py")
 
     if verbose:
