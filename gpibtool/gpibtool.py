@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 
-# pylint: disable=C0111  # docstrings are always outdated and wrong
-# pylint: disable=C0114  # Missing module docstring (missing-module-docstring)
-# pylint: disable=W0511  # todo is encouraged
-# pylint: disable=C0301  # line too long
-# pylint: disable=R0902  # too many instance attributes
-# pylint: disable=C0302  # too many lines in module
-# pylint: disable=C0103  # single letter var names, func name too descriptive
-# pylint: disable=R0911  # too many return statements
-# pylint: disable=R0912  # too many branches
-# pylint: disable=R0915  # too many statements
-# pylint: disable=R0913  # too many arguments
-# pylint: disable=R1702  # too many nested blocks
-# pylint: disable=R0914  # too many local variables
-# pylint: disable=R0903  # too few public methods
-# pylint: disable=E1101  # no member for base
-# pylint: disable=W0201  # attribute defined outside __init__
-# pylint: disable=R0916  # Too many boolean expressions in if statement
+# pylint: disable=missing-docstring               # [C0111] docstrings are always outdated and wrong
+# pylint: disable=missing-module-docstring        # [C0114]
+# pylint: disable=fixme                           # [W0511] todo is encouraged
+# pylint: disable=line-too-long                   # [C0301]
+# pylint: disable=too-many-instance-attributes    # [R0902]
+# pylint: disable=too-many-lines                  # [C0302] too many lines in module
+# pylint: disable=invalid-name                    # [C0103] single letter var names, name too descriptive
+# pylint: disable=too-many-return-statements      # [R0911]
+# pylint: disable=too-many-branches               # [R0912]
+# pylint: disable=too-many-statements             # [R0915]
+# pylint: disable=too-many-arguments              # [R0913]
+# pylint: disable=too-many-nested-blocks          # [R1702]
+# pylint: disable=too-many-locals                 # [R0914]
+# pylint: disable=too-few-public-methods          # [R0903]
+# pylint: disable=no-member                       # [E1101] no member for base
+# pylint: disable=attribute-defined-outside-init  # [W0201]
+# pylint: disable=too-many-boolean-expressions    # [R0916] in if statement
 
 # import gpib
 # import visa
@@ -25,6 +25,7 @@
 # from pyvisa.errors import VisaIOError
 # from gpib import GpibError
 
+from __future__ import annotations
 
 import os
 import sys
@@ -32,7 +33,6 @@ from contextlib import contextmanager
 from signal import SIG_DFL
 from signal import SIGPIPE
 from signal import signal
-from typing import Union
 
 import click
 import pyvisa
@@ -76,7 +76,7 @@ class NoResourcesFoundError(ValueError):
 def get_instrument(
     *,
     address: str,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
 ):
 
     if verbose:
@@ -91,7 +91,7 @@ def command_query(
     *,
     address: str,
     command: str,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
 ):
 
     ic(address)
@@ -109,7 +109,7 @@ def command_query(
 def command_idn(
     *,
     address: str,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
 ):
 
     idn = command_query(address=address, command="*IDN?", verbose=verbose)
@@ -122,7 +122,7 @@ def command_idn(
 
 
 def get_resources(
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
 ):
 
     with _supress_stderr():
@@ -147,9 +147,9 @@ def get_resources(
 @click.pass_context
 def cli(
     ctx,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
     verbose_inf: bool,
-    dict_input: bool,
+    dict_output: bool,
 ):
 
     tty, verbose = tv(
@@ -166,9 +166,9 @@ def cli(
 def _read_command_idn(
     ctx,
     address: str,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
     verbose_inf: bool,
-    dict_input: bool,
+    dict_output: bool,
 ):
 
     tty, verbose = tv(
@@ -185,9 +185,9 @@ def _read_command_idn(
 @click.pass_context
 def _pyvisa_info(
     ctx,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
     verbose_inf: bool,
-    dict_input: bool,
+    dict_output: bool,
 ):
 
     tty, verbose = tv(
@@ -206,9 +206,9 @@ def _pyvisa_info(
 @click.pass_context
 def _bnf_syntax(
     ctx,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
     verbose_inf: bool,
-    dict_input: bool,
+    dict_output: bool,
 ):
 
     tty, verbose = tv(
@@ -228,16 +228,16 @@ def _bnf_syntax(
     command = "[:]<Header>[<Space><Argument>[<Comma> <Argument>]...]"
     query = ("[:]<Header>", "[:]<Header>[<Space><Argument> [<Comma><Argument>]...]")
 
-    output(bnf_symbols, reason=None, dict_input=dict_input, tty=tty, verbose=verbose)
+    output(bnf_symbols, reason=None, dict_output=dict_output, tty=tty, verbose=verbose)
     output(
         command_message_elements,
         reason=None,
-        dict_input=dict_input,
+        dict_output=dict_output,
         tty=tty,
         verbose=verbose,
     )
-    output(command, reason=None, dict_input=dict_input, tty=tty, verbose=verbose)
-    output(query, reason=None, dict_input=dict_input, tty=tty, verbose=verbose)
+    output(command, reason=None, dict_output=dict_output, tty=tty, verbose=verbose)
+    output(query, reason=None, dict_output=dict_output, tty=tty, verbose=verbose)
 
 
 @cli.command("command-write")
@@ -249,9 +249,9 @@ def _command_write(
     ctx,
     address: str,
     command: str,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
     verbose_inf: bool,
-    dict_input: bool,
+    dict_output: bool,
 ):
 
     tty, verbose = tv(
@@ -279,9 +279,9 @@ def _command_query(
     ctx,
     address: str,
     command: str,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
     verbose_inf: bool,
-    dict_input: bool,
+    dict_output: bool,
 ):
 
     tty, verbose = tv(
@@ -306,9 +306,9 @@ def _command_query(
 @click.pass_context
 def _list_addresses(
     ctx,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
     verbose_inf: bool,
-    dict_input: bool,
+    dict_output: bool,
     ipython: bool,
 ):
 
@@ -324,7 +324,7 @@ def _list_addresses(
     if verbose:
         ic(resources)
     for resource in resources:
-        output(resource, reason=None, tty=tty, dict_input=dict_input, verbose=verbose)
+        output(resource, reason=None, tty=tty, dict_output=dict_output, verbose=verbose)
 
 
 @cli.command("idns")
@@ -333,15 +333,15 @@ def _list_addresses(
 @click.pass_context
 def _list_idns(
     ctx,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
     verbose_inf: bool,
-    dict_input: bool,
+    dict_output: bool,
     ipython: bool,
 ):
 
-    # forcing dict_input=True since a IDN alone is _never_ as useful as a (GPIB source: IDN) mapping
+    # forcing dict_output=True since a IDN alone is _never_ as useful as a (GPIB source: IDN) mapping
     # toodoo-maybe: if the GPIB source was read on stdin, this wouldnt be be necessary
-    dict_input = True  # this does not take input on stdin, todo: fix dict_input convention to reflect this
+    dict_output = True  # this does not take input on stdin, todo: fix dict_output convention to reflect this
     tty, verbose = tv(
         ctx=ctx,
         verbose=verbose,
@@ -368,7 +368,7 @@ def _list_idns(
                 reason=resource,
                 tty=tty,
                 verbose=verbose,
-                dict_input=dict_input,
+                dict_output=dict_output,
             )
         except VisaIOError as e:
             if verbose:
