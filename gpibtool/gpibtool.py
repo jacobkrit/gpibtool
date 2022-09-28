@@ -50,26 +50,6 @@ from stdiotool import supress_stderr
 signal(SIGPIPE, SIG_DFL)
 
 
-## https://github.com/pyvisa/pyvisa-py/issues/282
-# @contextmanager
-# def _supress_stderr():
-#    original_stderr = os.dup(
-#        2
-#    )  # stderr stream is linked to file descriptor 2, save a copy of the real stderr so later we can restore it
-#    blackhole = os.open(
-#        os.devnull, os.O_WRONLY
-#    )  # anything written to /dev/null will be discarded
-#    os.dup2(
-#        blackhole, 2
-#    )  # duplicate the blackhole to file descriptor 2, which the C library uses as stderr
-#    os.close(
-#        blackhole
-#    )  # blackhole was duplicated from the line above, so we don't need this anymore
-#    yield
-#    os.dup2(original_stderr, 2)  # restoring the original stderr
-#    os.close(original_stderr)
-
-
 class NoResourcesFoundError(ValueError):
     pass
 
@@ -197,7 +177,7 @@ def _pyvisa_info(
         verbose_inf=verbose_inf,
     )
 
-    info_command = sh.Command("/usr/bin/pyvisa-info")
+    info_command = sh.Command("pyvisa-info")
     # python -c "from pyvisa import util; util.get_debug_info()"
     info_command(_out=sys.stdout)
 
