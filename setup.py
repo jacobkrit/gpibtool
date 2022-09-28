@@ -15,6 +15,7 @@ dependencies = [
     "click",
     "PyVISA-py",
     "sh",
+    "gpib-ctypes",
     "asserttool @ git+https://git@github.com/jakeogh/asserttool",
     "bnftool @ git+https://git@github.com/jakeogh/bnftool",
     "stdiotool @ git+https://git@github.com/jakeogh/stdiotool",
