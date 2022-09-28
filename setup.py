@@ -17,6 +17,7 @@ dependencies = [
     "sh",
     "asserttool @ git+https://git@github.com/jakeogh/asserttool",
     "bnftool @ git+https://git@github.com/jakeogh/bnftool",
+    "stdiotool @ git+https://git@github.com/jakeogh/stdiotool",
 ]
 
 config = {
