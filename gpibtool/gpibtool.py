@@ -64,7 +64,6 @@ def get_instrument(
     if verbose:
         ic(address)
     rm = pyvisa.ResourceManager("@py")
-    ic(address)
     inst = rm.open_resource(address)
     return inst
 
@@ -76,7 +75,8 @@ def command_query(
     verbose: bool | int | float,
 ):
 
-    ic(address)
+    if verbose:
+        ic(address)
     inst = get_instrument(
         address=address,
         verbose=verbose,
@@ -159,7 +159,13 @@ def _read_command_idn(
 
     iterator: Sequence[str] = unmp(valid_types=[str], verbose=verbose)
     for address in iterator:
-        print(command_idn(address=address, verbose=verbose))
+        output(
+            command_idn(address=address, verbose=verbose),
+            reason=address,
+            dict_output=dict_output,
+            tty=tty,
+            verbose=verbose,
+        )
 
 
 @cli.command("info")
