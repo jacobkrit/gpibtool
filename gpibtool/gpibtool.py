@@ -223,7 +223,14 @@ def _bnf_syntax(
     command = "[:]<Header>[<Space><Argument>[<Comma> <Argument>]...]"
     query = ("[:]<Header>", "[:]<Header>[<Space><Argument> [<Comma><Argument>]...]")
 
-    output(bnf_symbols, reason=None, dict_output=dict_output, tty=tty, verbose=verbose)
+    output(
+        bnf_symbols,
+        reason=None,
+        pretty_print=True,
+        dict_output=dict_output,
+        tty=tty,
+        verbose=verbose,
+    )
     output(
         command_message_elements,
         reason=None,
