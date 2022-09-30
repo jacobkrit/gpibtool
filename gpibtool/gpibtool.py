@@ -354,12 +354,13 @@ def _list_idns(
     for resource in resources:
         if verbose:
             ic(resource)
-        inst = rm.open_resource(resource)
-        if verbose:
-            ic(inst)
+        # inst = rm.open_resource(resource)
+        # if verbose:
+        #    ic(inst)
         try:
+            #    inst.query("*IDN?"),
             output(
-                inst.query("*IDN?"),
+                command_idn(address=resource, verbose=verbose),
                 reason=resource,
                 tty=tty,
                 verbose=verbose,
