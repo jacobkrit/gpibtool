@@ -27,9 +27,7 @@
 
 from __future__ import annotations
 
-import os
 import sys
-from contextlib import contextmanager
 from signal import SIG_DFL
 from signal import SIGPIPE
 from signal import signal
@@ -43,6 +41,7 @@ from click_auto_help import AHGroup
 from clicktool import click_add_options
 from clicktool import click_global_options
 from clicktool import tv
+from eprint import eprint
 from mptool import output
 from pyvisa.errors import VisaIOError
 from stdiotool import supress_stderr
@@ -179,7 +178,14 @@ def _pyvisa_info(
 
     info_command = sh.Command("pyvisa-info")
     # python -c "from pyvisa import util; util.get_debug_info()"
+    pyvisa_info_path = str(sh.which("pyvisa-info")).strip()
+    eprint(f"Output of {pyvisa_info_path}:")
     info_command(_out=sys.stdout)
+
+    lsusb_command = sh.Command("lsusb")
+    lsusb_path = str(sh.which("lsusb")).strip()
+    eprint(f"Output of {lsusb_path}:")
+    lsusb_command(_out=sys.stdout)
 
 
 @cli.command("syntax")
