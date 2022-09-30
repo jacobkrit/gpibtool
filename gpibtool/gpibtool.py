@@ -234,12 +234,27 @@ def _bnf_syntax(
     output(
         command_message_elements,
         reason=None,
+        pretty_print=True,
         dict_output=dict_output,
         tty=tty,
         verbose=verbose,
     )
-    output(command, reason=None, dict_output=dict_output, tty=tty, verbose=verbose)
-    output(query, reason=None, dict_output=dict_output, tty=tty, verbose=verbose)
+    output(
+        command,
+        reason=None,
+        dict_output=dict_output,
+        tty=tty,
+        verbose=verbose,
+        pretty_print=True,
+    )
+    output(
+        query,
+        reason=None,
+        dict_output=dict_output,
+        tty=tty,
+        verbose=verbose,
+        pretty_print=True,
+    )
 
 
 @cli.command("command-write")
