@@ -28,6 +28,7 @@
 from __future__ import annotations
 
 import sys
+from collections.abc import Sequence
 from signal import SIG_DFL
 from signal import SIGPIPE
 from signal import signal
@@ -45,6 +46,7 @@ from eprint import eprint
 from mptool import output
 from pyvisa.errors import VisaIOError
 from stdiotool import supress_stderr
+from unmp import unmp
 
 signal(SIGPIPE, SIG_DFL)
 
@@ -140,12 +142,10 @@ def cli(
 
 
 @cli.command("idn")
-@click.argument("address", type=str)
 @click_add_options(click_global_options)
 @click.pass_context
 def _read_command_idn(
     ctx,
-    address: str,
     verbose: bool | int | float,
     verbose_inf: bool,
     dict_output: bool,
@@ -157,7 +157,9 @@ def _read_command_idn(
         verbose_inf=verbose_inf,
     )
 
-    print(command_idn(address=address, verbose=verbose))
+    iterator: Sequence[str] = unmp(valid_types=[str], verbose=verbose)
+    for address in iterator:
+        print(command_idn(address=address, verbose=verbose))
 
 
 @cli.command("info")
