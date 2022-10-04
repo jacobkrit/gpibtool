@@ -380,7 +380,6 @@ def _list_idns(
         # if verbose:
         #    ic(inst)
         try:
-            #    inst.query("*IDN?"),
             output(
                 command_idn(address=resource, verbose=verbose),
                 reason=resource,
