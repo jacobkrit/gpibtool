@@ -104,6 +104,7 @@ def command_idn(
 
 
 def get_resources(
+    keep_asrl: bool,
     verbose: bool | int | float,
 ):
 
@@ -113,10 +114,16 @@ def get_resources(
 
     if verbose:
         ic(resources)
-    try:
-        resources.remove("ASRL/dev/ttyS0::INSTR")
-    except ValueError:
-        pass
+
+    if not keep_asrl:
+        try:
+            resources.remove("ASRL/dev/ttyS0::INSTR")
+        except ValueError:
+            pass
+        try:
+            resources.remove("ASRL/dev/ttyUSB0::INSTR")
+        except ValueError:
+            pass
 
     if resources:
         return tuple(resources)
@@ -318,6 +325,7 @@ def _command_query(
 
 
 @cli.command("addresses")
+@click.option("--asrl", is_flag=True)
 @click.option("--ipython", is_flag=True)
 @click_add_options(click_global_options)
 @click.pass_context
@@ -327,6 +335,7 @@ def _list_addresses(
     verbose_inf: bool,
     dict_output: bool,
     ipython: bool,
+    asrl: bool,
 ):
 
     tty, verbose = tv(
@@ -337,7 +346,7 @@ def _list_addresses(
 
     # https://github.com/pyvisa/pyvisa-py/issues/282
     with supress_stderr():
-        resources = get_resources(verbose=verbose)
+        resources = get_resources(keep_asrl=asrl, verbose=verbose)
     if verbose:
         ic(resources)
     for resource in resources:
@@ -345,6 +354,7 @@ def _list_addresses(
 
 
 @cli.command("idns")
+@click.option("--asrl", is_flag=True)
 @click.option("--ipython", is_flag=True)
 @click_add_options(click_global_options)
 @click.pass_context
@@ -354,6 +364,7 @@ def _list_idns(
     verbose_inf: bool,
     dict_output: bool,
     ipython: bool,
+    asrl: bool,
 ):
 
     # forcing dict_output=True since a IDN alone is _never_ as useful as a (GPIB source: IDN) mapping
@@ -372,7 +383,7 @@ def _list_idns(
 
     if verbose:
         ic("calling: get_resources()")
-    resources = get_resources(verbose=verbose)
+    resources = get_resources(keep_asrl=asrl, verbose=verbose)
     for resource in resources:
         if verbose:
             ic(resource)
