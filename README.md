@@ -59,33 +59,16 @@ Commands:
 
 $ # list current GPIB addresses:
 $ gpibtool addresses
-
+ic| 1664914924.524 3856 gpibtool:12<click>‚Üí ''/gpibtool.py:360Ôº† get_resources():114 at 20:22:04.524
+ØGPIB0::2::INSTR
 $ # send the IDN command to each address:
 $ gpibtool idns
-Traceback (most recent call last):
-  File "/usr/lib/python-exec/python3.10/gpibtool", line 12, in <module>
-    sys.exit(cli())
-  File "/usr/lib/python3.10/site-packages/click/core.py", line 1130, in __call__
-    return self.main(*args, **kwargs)
-  File "/usr/lib/python3.10/site-packages/click/core.py", line 1055, in main
-    rv = self.invoke(ctx)
-  File "/usr/lib/python3.10/site-packages/click/core.py", line 1657, in invoke
-    return _process_result(sub_ctx.command.invoke(sub_ctx))
-  File "/usr/lib/python3.10/site-packages/click/core.py", line 1404, in invoke
-    return ctx.invoke(self.callback, **ctx.params)
-  File "/usr/lib/python3.10/site-packages/click/core.py", line 760, in invoke
-    return __callback(*args, **kwargs)
-  File "/usr/lib/python3.10/site-packages/click/decorators.py", line 26, in new_func
-    return f(get_current_context(), *args, **kwargs)
-  File "/usr/lib/python3.10/site-packages/gpibtool/gpibtool.py", line 396, in _list_idns
-    resources = get_resources(keep_asrl=asrl, verbose=verbose)
-  File "/usr/lib/python3.10/site-packages/gpibtool/gpibtool.py", line 141, in get_resources
-    raise NoResourcesFoundError
-gpibtool.gpibtool.NoResourcesFoundError
-
+ic| 1664914925.568 3936 gpibtool:12<click>‚Üí ''/gpibtool.py:397Ôº† get_resources():114 at 20:22:05.568
+ÅØGPIB0::2::INSTRŸ-TEKTRONIX,AFG3022B,C037086,SCPI:99.0 FV:3.2.2
 $ # this command is composable, so the same result can be obtained with:
 $ gpibtool addresses | gpibtool idn --dict
-
+ic| 1664914926.702 4004 gpibtool:12<click>‚Üí ''/gpibtool.py:360Ôº† get_resources():114 at 20:22:06.702
+ÅØGPIB0::2::INSTRŸ-TEKTRONIX,AFG3022B,C037086,SCPI:99.0 FV:3.2.2
 $ # display troubleshooting info:
 $ gpibtool info
 Output of /usr/bin/pyvisa-info:
@@ -131,7 +114,7 @@ Bus 001 Device 004: ID 05c8:0374 Cheng Uei Precision Industry Co., Ltd (Foxlink)
 Bus 001 Device 003: ID 138a:003f Validity Sensors, Inc. VFS495 Fingerprint Reader
 Bus 001 Device 002: ID 08bb:29b0 Texas Instruments PCM2900B Audio CODEC
 Bus 001 Device 006: ID 8087:07dc Intel Corp. Bluetooth wireless interface
-Bus 001 Device 015: ID 3923:709b National Instruments Corp. GPIB-USB-HS
+Bus 001 Device 016: ID 3923:709b National Instruments Corp. GPIB-USB-HS
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
 ```
