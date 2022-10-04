@@ -111,6 +111,7 @@ def get_resources(
     verbose: bool | int | float,
 ):
 
+    ic()
     if verbose:
         ic(keep_asrl)
 
@@ -355,8 +356,8 @@ def _list_addresses(
     )
 
     # https://github.com/pyvisa/pyvisa-py/issues/282
-    with supress_stderr():
-        resources = get_resources(keep_asrl=asrl, verbose=verbose)
+    # with supress_stderr():
+    resources = get_resources(keep_asrl=asrl, verbose=verbose)
     if verbose:
         ic(resources)
     for resource in resources:
