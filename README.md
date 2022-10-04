@@ -59,13 +59,33 @@ Commands:
 
 $ # list current GPIB addresses:
 $ gpibtool addresses
-ØGPIB0::2::INSTR
+
 $ # send the IDN command to each address:
 $ gpibtool idns
-ÅØGPIB0::2::INSTRŸ-TEKTRONIX,AFG3022B,C037086,SCPI:99.0 FV:3.2.2
+Traceback (most recent call last):
+  File "/usr/lib/python-exec/python3.10/gpibtool", line 12, in <module>
+    sys.exit(cli())
+  File "/usr/lib/python3.10/site-packages/click/core.py", line 1130, in __call__
+    return self.main(*args, **kwargs)
+  File "/usr/lib/python3.10/site-packages/click/core.py", line 1055, in main
+    rv = self.invoke(ctx)
+  File "/usr/lib/python3.10/site-packages/click/core.py", line 1657, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/lib/python3.10/site-packages/click/core.py", line 1404, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/lib/python3.10/site-packages/click/core.py", line 760, in invoke
+    return __callback(*args, **kwargs)
+  File "/usr/lib/python3.10/site-packages/click/decorators.py", line 26, in new_func
+    return f(get_current_context(), *args, **kwargs)
+  File "/usr/lib/python3.10/site-packages/gpibtool/gpibtool.py", line 396, in _list_idns
+    resources = get_resources(keep_asrl=asrl, verbose=verbose)
+  File "/usr/lib/python3.10/site-packages/gpibtool/gpibtool.py", line 141, in get_resources
+    raise NoResourcesFoundError
+gpibtool.gpibtool.NoResourcesFoundError
+
 $ # this command is composable, so the same result can be obtained with:
 $ gpibtool addresses | gpibtool idn --dict
-ÅØGPIB0::2::INSTRŸ-TEKTRONIX,AFG3022B,C037086,SCPI:99.0 FV:3.2.2
+
 $ # display troubleshooting info:
 $ gpibtool info
 Output of /usr/bin/pyvisa-info:
@@ -111,10 +131,7 @@ Bus 001 Device 004: ID 05c8:0374 Cheng Uei Precision Industry Co., Ltd (Foxlink)
 Bus 001 Device 003: ID 138a:003f Validity Sensors, Inc. VFS495 Fingerprint Reader
 Bus 001 Device 002: ID 08bb:29b0 Texas Instruments PCM2900B Audio CODEC
 Bus 001 Device 006: ID 8087:07dc Intel Corp. Bluetooth wireless interface
-Bus 001 Device 014: ID 07a6:8511 ADMtek, Inc. ADM8511 Pegasus II Ethernet
-Bus 001 Device 013: ID 3923:709b National Instruments Corp. GPIB-USB-HS
-Bus 001 Device 012: ID 067b:2303 Prolific Technology, Inc. PL2303 Serial Port / Mobile Action MA-8910P
-Bus 001 Device 011: ID 05e3:0608 Genesys Logic, Inc. Hub
+Bus 001 Device 015: ID 3923:709b National Instruments Corp. GPIB-USB-HS
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
 ```
