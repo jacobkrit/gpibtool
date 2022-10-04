@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import sys
 from collections.abc import Sequence
+from math import inf
 from signal import SIG_DFL
 from signal import SIGPIPE
 from signal import signal
@@ -65,6 +66,8 @@ def get_instrument(
         ic(address)
     rm = pyvisa.ResourceManager("@py")
     inst = rm.open_resource(address)
+    if verbose:
+        ic(inst)
     return inst
 
 
@@ -108,9 +111,16 @@ def get_resources(
     verbose: bool | int | float,
 ):
 
-    with supress_stderr():
+    if verbose:
+        ic(keep_asrl)
+
+    if verbose == inf:
         resource_manager = pyvisa.ResourceManager()
         resources = list(resource_manager.list_resources())
+    else:
+        with supress_stderr():
+            resource_manager = pyvisa.ResourceManager()
+            resources = list(resource_manager.list_resources())
 
     if verbose:
         ic(resources)
