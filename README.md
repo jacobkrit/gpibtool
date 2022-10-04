@@ -59,45 +59,13 @@ Commands:
 
 $ # list current GPIB addresses:
 $ gpibtool addresses
-∑ASRL/dev/ttyUSB0::INSTRØGPIB0::2::INSTR
+ØGPIB0::2::INSTR
 $ # send the IDN command to each address:
 $ gpibtool idns
 ÅØGPIB0::2::INSTRŸ-TEKTRONIX,AFG3022B,C037086,SCPI:99.0 FV:3.2.2
 $ # this command is composable, so the same result can be obtained with:
 $ gpibtool addresses | gpibtool idn --dict
-Traceback (most recent call last):
-  File "/usr/lib/python-exec/python3.10/gpibtool", line 12, in <module>
-    sys.exit(cli())
-  File "/usr/lib/python3.10/site-packages/click/core.py", line 1130, in __call__
-    return self.main(*args, **kwargs)
-  File "/usr/lib/python3.10/site-packages/click/core.py", line 1055, in main
-    rv = self.invoke(ctx)
-  File "/usr/lib/python3.10/site-packages/click/core.py", line 1657, in invoke
-    return _process_result(sub_ctx.command.invoke(sub_ctx))
-  File "/usr/lib/python3.10/site-packages/click/core.py", line 1404, in invoke
-    return ctx.invoke(self.callback, **ctx.params)
-  File "/usr/lib/python3.10/site-packages/click/core.py", line 760, in invoke
-    return __callback(*args, **kwargs)
-  File "/usr/lib/python3.10/site-packages/click/decorators.py", line 26, in new_func
-    return f(get_current_context(), *args, **kwargs)
-  File "/usr/lib/python3.10/site-packages/gpibtool/gpibtool.py", line 163, in _read_command_idn
-    command_idn(address=address, verbose=verbose),
-  File "/usr/lib/python3.10/site-packages/gpibtool/gpibtool.py", line 97, in command_idn
-    idn = command_query(address=address, command="*IDN?", verbose=verbose)
-  File "/usr/lib/python3.10/site-packages/gpibtool/gpibtool.py", line 85, in command_query
-    idn = inst.query(command)
-  File "/usr/lib/python3.10/site-packages/pyvisa/resources/messagebased.py", line 648, in query
-    return self.read()
-  File "/usr/lib/python3.10/site-packages/pyvisa/resources/messagebased.py", line 486, in read
-    message = self._read_raw().decode(enco)
-  File "/usr/lib/python3.10/site-packages/pyvisa/resources/messagebased.py", line 442, in _read_raw
-    chunk, status = self.visalib.read(self.session, size)
-  File "/usr/lib/python3.10/site-packages/pyvisa_py/highlevel.py", line 519, in read
-    return data, self.handle_return_value(session, status_code)
-  File "/usr/lib/python3.10/site-packages/pyvisa/highlevel.py", line 251, in handle_return_value
-    raise errors.VisaIOError(rv)
-pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
-
+ÅØGPIB0::2::INSTRŸ-TEKTRONIX,AFG3022B,C037086,SCPI:99.0 FV:3.2.2
 $ # display troubleshooting info:
 $ gpibtool info
 Output of /usr/bin/pyvisa-info:
